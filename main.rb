@@ -9,11 +9,10 @@ include Menu
 #@player = Player.new
 #@dealer = Dealer.new
 
+system 'clear'
 main_menu
-@player.take_card(@deck) if @player.another_card?
-@dealer.take_card(@deck) if @dealer.another_card?
-round_state
-
+#round_state
+#check_victory
 
 #puts @deck
 #puts @player

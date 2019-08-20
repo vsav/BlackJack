@@ -1,7 +1,8 @@
 class Person
   attr_accessor :balance, :hand
+  attr_reader :name
 
-  def initialize
+  def initialize(*name)
     @balance = 100
     @hand = {}
   end
@@ -16,9 +17,7 @@ class Person
         ace_recount
       end
     end
-    draw_hand
     count_points
-    #puts "Points total: #{@points}"
   end
 
   def count_points
@@ -38,13 +37,22 @@ class Person
   end
 
   def draw_hand
+    puts "#{@name}'s hand: #{@points} points total"
+    puts '*' * 30
     @hand.each_key do |card|
       print "|#{card}| "
     end
+    puts
   end
 
   def limit?
     count_points
-    @points >= 21
+    @points > 21
+  end
+
+  def another_card?
+    print 'One more card?(1:take card, 2:pass): '
+    user_input = gets.to_i
+    user_input == 1
   end
 end

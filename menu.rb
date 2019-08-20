@@ -3,12 +3,12 @@ module Menu
   def main_menu
     system 'clear'
     begin
-    puts 'Black Jack'
-    puts
-    puts '1. New Game'
-    puts '2. Exit'
-    user_input = gets.to_i
-    raise 'Please enter 1 for New Game or 2 to Exit' unless [1, 2].include?(user_input)
+      puts 'Black Jack'
+      puts
+      puts '1. New Game'
+      puts '2. Exit'
+      user_input = gets.to_i
+      raise 'Please enter 1 for New Game or 2 to Exit' unless [1, 2].include?(user_input)
     rescue RuntimeError => e
       puts e.message
       puts
@@ -25,9 +25,9 @@ module Menu
 
   def new_game
     begin
-    print 'Enter your name: '
-    name = gets.strip.capitalize
-    raise 'Name cant be blank' if name.to_s.empty?
+      print 'Enter your name: '
+      name = gets.strip.capitalize
+      raise 'Name cant be blank' if name.to_s.empty?
     rescue RuntimeError => e
       puts e.message
       retry
@@ -69,8 +69,14 @@ module Menu
       player_wins
     end
 
-    puts 'One more round?(1:yes 2:main menu) '
-    user_input = gets.to_i
+    begin
+      puts 'One more round?(1:yes 2:main menu) '
+      user_input = gets.to_i
+      raise 'Please input 1 for New Round or 2 for Main Menu' unless [1, 2].include?(user_input)
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
     case user_input
     when 1
       new_round
@@ -80,7 +86,7 @@ module Menu
   end
 
   def player_wins
-    puts "PREY SLAUGHTERED!"
+    puts 'PREY SLAUGHTERED!'
     puts
     @player.balance += 20
     if @dealer.balance.zero?
@@ -92,7 +98,7 @@ module Menu
   end
 
   def dealer_wins
-    puts "YOU DIED!"
+    puts 'YOU DIED!'
     puts
     @dealer.balance += 20
     if @player.balance.zero?
@@ -104,7 +110,7 @@ module Menu
   end
 
   def draw
-    puts "DRAW!"
+    puts 'DRAW!'
     puts
     @player.balance += 10
     @dealer.balance += 10

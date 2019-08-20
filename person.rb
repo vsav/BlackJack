@@ -2,7 +2,7 @@ class Person
   attr_accessor :balance, :hand
   attr_reader :name, :points
 
-  def initialize(*name)
+  def initialize(*)
     @balance = 100
     @hand = {}
   end

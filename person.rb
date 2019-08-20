@@ -52,8 +52,14 @@ class Person
   end
 
   def another_card?
-    print 'One more card?(1:take card, 2:pass): '
-    user_input = gets.to_i
-    user_input == 1
+    begin
+      print 'One more card?(1:take card, 2:pass): '
+      user_input = gets.to_i
+      raise 'Please input 1 to take card or 2 to pass' unless [1, 2].include?(user_input)
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
+    return true if user_input == 1
   end
 end

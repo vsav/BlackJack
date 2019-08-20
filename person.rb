@@ -1,6 +1,6 @@
 class Person
   attr_accessor :balance, :hand
-  attr_reader :name
+  attr_reader :name, :points
 
   def initialize(*name)
     @balance = 100
@@ -27,7 +27,8 @@ class Person
     end
   end
 
-  def pass
+  def place_bet
+    @balance -= 10
   end
 
   def ace_recount

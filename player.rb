@@ -1,6 +1,6 @@
 class Player < Person
-  attr_reader :dealer_hand
-  def initialize
+  def initialize(name)
     super
+    @name = name
   end
 end

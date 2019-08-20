@@ -4,24 +4,38 @@ module Menu
     puts
     puts '1. New Game'
     puts '2. Exit'
+    user_input = gets.to_i
+    case user_input
+    when 1
+      new_game
+    when 2
+      puts 'GoodBye!'
+      exit
+    end
   end
 
   def new_game
     print 'Enter your name: '
-    @player = Player.new(gets.strip.capitalize)
+    name = gets.strip.capitalize
+    @player = Player.new(name)
     @dealer = Dealer.new
     @deck = Deck.new
     new_round
   end
 
   def new_round
-    2.times(@player.take_card(@deck))
-    2.times(@dealer.take_card(@deck))
+    system 'clear'
+    2.times{ @player.take_card(@deck) }
+    2.times{ @dealer.take_card(@deck) }
+    round_state
   end
 
-  def another_card?
-    print 'One more card?(1:take card, 2:pass): '
-    user_input = gets.strip
-    user_input == '1'
+
+
+  def round_state
+    @player.draw_hand
+    puts
+    @dealer.draw_hand
+    puts
   end
 end

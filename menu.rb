@@ -1,11 +1,19 @@
 module Menu
   attr_reader :player, :dealer, :deck
   def main_menu
+    system 'clear'
+    begin
     puts 'Black Jack'
     puts
     puts '1. New Game'
     puts '2. Exit'
     user_input = gets.to_i
+    raise 'Please enter 1 for New Game or 2 to Exit' unless [1, 2].include?(user_input)
+    rescue RuntimeError => e
+      puts e.message
+      puts
+      retry
+    end
     case user_input
     when 1
       new_game
@@ -16,8 +24,14 @@ module Menu
   end
 
   def new_game
+    begin
     print 'Enter your name: '
     name = gets.strip.capitalize
+    raise 'Name cant be blank' if name.to_s.empty?
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
     @player = Player.new(name)
     @dealer = Dealer.new
     @deck = Deck.new
@@ -36,7 +50,7 @@ module Menu
     @player.take_card(@deck) if player.another_card?
     @dealer.take_card(@deck) if dealer.another_card?
     system 'clear'
-    round_state
+    round_summary
     check_victory
   end
 
@@ -69,12 +83,24 @@ module Menu
     puts "PREY SLAUGHTERED!"
     puts
     @player.balance += 20
+    if @dealer.balance.zero?
+      puts 'You won the game!'
+      puts 'Press any key to return to main menu'
+      gets
+      main_menu
+    end
   end
 
   def dealer_wins
     puts "YOU DIED!"
     puts
     @dealer.balance += 20
+    if @player.balance.zero?
+      puts 'Your balance is empty!'
+      puts 'Press any key to return to main menu'
+      gets
+      main_menu
+    end
   end
 
   def draw
@@ -89,9 +115,16 @@ module Menu
     puts
     puts "#{@player.name}'s balance: #{@player.balance}"
     puts
-    @dealer.draw_hand
+    @dealer.draw_hand_hidden
     puts
     puts "#{@dealer.name}'s balance: #{@dealer.balance}"
+    puts
+  end
+
+  def round_summary
+    @player.draw_hand
+    puts
+    @dealer.draw_hand
     puts
   end
 end

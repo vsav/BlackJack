@@ -2,7 +2,7 @@ require_relative './deck.rb'
 require_relative './person.rb'
 require_relative './player.rb'
 require_relative './dealer.rb'
-require_relative './menu.rb'
-include Menu
+require_relative './game.rb'
 
-main_menu
+game = Game.new
+game.main_menu

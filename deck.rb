@@ -6,11 +6,11 @@ class Deck
   attr_reader :deck
   def initialize
     @deck = []
-    combine_deck
+    collect_deck
     deck_shuffle
   end
 
-  def combine_deck
+  def collect_deck
     cards = {}
     faces = { '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8,
               '9' => 9, '10' => 10, 'J' => 10, 'Q' => 10, 'K' => 10, 'A' => 11 }

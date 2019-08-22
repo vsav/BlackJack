@@ -1,7 +1,14 @@
 class Dealer < Person
+  attr_accessor :hidden
+
   def initialize
     super
     @name = 'Dealer'
+    @hidden = true
+  end
+
+  def next_turn(deck)
+    take_card(deck) if another_card?
   end
 
   def another_card?

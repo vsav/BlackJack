@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# AI player class
 class Dealer < Person
   attr_accessor :hidden
 

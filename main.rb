@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative './card.rb'
 require_relative './deck.rb'
 require_relative './person.rb'

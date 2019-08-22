@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 # \u{2660} - spades
 # \u{2665} - heart
 # \u{2666} - diamond
 # \u{2663} - club
+# playing cards deck class
 class Deck
   attr_reader :cards
   def initialize

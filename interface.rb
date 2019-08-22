@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
+# CLI
 class Interface
-  attr_reader :user_input
   def initialize(game)
     @game = game
   end

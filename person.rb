@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# main class for both human and AI
 class Person
   attr_accessor :balance, :hand, :card
   attr_reader :name, :points, :player, :dealer, :deck

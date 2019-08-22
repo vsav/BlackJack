@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# main game actions
 class Game
   attr_reader :player, :dealer, :deck
   BET = 10

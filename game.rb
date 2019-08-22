@@ -1,12 +1,18 @@
 class Game
   attr_reader :player, :dealer, :deck
+  BET = 10
+  def initialize(player, dealer, deck)
+    @player = player
+    @dealer = dealer
+    @deck = deck
+    @interface = Interface.new
+    @bet = BET
+    @bank = 0
+  end
+
   def main_menu
-    system 'clear'
+    @interface.main_menu
     begin
-      puts 'Black Jack'
-      puts
-      puts '1. New Game'
-      puts '2. Exit'
       user_input = gets.to_i
       raise 'Please enter 1 for New Game or 2 to Exit' unless [1, 2].include?(user_input)
     rescue RuntimeError => e
@@ -24,8 +30,8 @@ class Game
   end
 
   def new_game
+    @interface.new_game
     begin
-      print 'Enter your name: '
       name = gets.strip.capitalize
       raise 'Name cant be blank' if name.to_s.empty?
     rescue RuntimeError => e
@@ -42,16 +48,33 @@ class Game
     @dealer.hand = {}
     @deck = Deck.new
     system 'clear'
-    @player.place_bet
-    @dealer.place_bet
+    place_bets
     2.times { @player.take_card(@deck) }
     2.times { @dealer.take_card(@deck) }
     round_state
-    @player.make_turn
-    @dealer.make_turn
+    @player.take_card(@deck) if @player.another_card?
+    @dealer.take_card(@deck) if @dealer.another_card?
     system 'clear'
     round_summary
     check_victory
+    another_round
+  end
+
+  def another_round
+    @interface.another_round
+    begin
+      user_input = gets.to_i
+      raise 'Please input 1 for New Round or 2 for Main Menu' unless [1, 2].include?(user_input)
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
+    case user_input
+    when 1
+      new_round
+    when 2
+      main_menu
+    end
   end
 
   def check_victory
@@ -68,38 +91,29 @@ class Game
     elsif @player.points < @dealer.points && @dealer.points > 21
       player_wins
     end
+  end
 
-    begin
-      puts 'One more round?(1:yes 2:main menu) '
-      user_input = gets.to_i
-      raise 'Please input 1 for New Round or 2 for Main Menu' unless [1, 2].include?(user_input)
-    rescue RuntimeError => e
-      puts e.message
-      retry
-    end
-    case user_input
-    when 1
-      new_round
-    when 2
-      main_menu
-    end
+  def place_bets
+    @player.balance -= @bet
+    @dealer.balance -= @bet
+    @bank = @bet * 2
   end
 
   def player_wins
     puts 'PREY SLAUGHTERED!'
     puts
-    @player.balance += 20
+    @player.balance += @bank
     dealer_loose if @dealer.balance.zero?
   end
 
   def dealer_wins
     puts 'YOU DIED!'
     puts
-    @dealer.balance += 20
+    @dealer.balance += @bank
     player_loose if @player.balance.zero?
   end
 
-  def deales_loose
+  def dealer_loose
     puts 'You won the game!'
     puts 'Press any key to return to main menu'
     gets
@@ -116,8 +130,8 @@ class Game
   def draw
     puts 'DRAW!'
     puts
-    @player.balance += 10
-    @dealer.balance += 10
+    @player.balance += @bet
+    @dealer.balance += @bet
   end
 
   def round_state

@@ -1,39 +1,35 @@
 class Person
   attr_accessor :balance, :hand
-  attr_reader :name, :points
+  attr_reader :name, :points, :player, :dealer, :deck
 
   def initialize(*)
     @balance = 100
-    @hand = {}
+    @hand = []
   end
 
   def take_card(deck)
     card = deck.take_card
-    @hand[card[0]] = card[1]
     if limit?
-      if card[0].to_s.include?('A')
-        @hand[card[0]] = 1
+      if card.face.to_s.include?('A')
+        card.value = 1
       else
         ace_recount
       end
     end
+    @hand << card
     count_points
   end
 
   def count_points
     @points = 0
-    @hand.each_value do |value|
-      @points += value
+    @hand.each do |card|
+      @points += card.value
     end
-  end
-
-  def place_bet
-    @balance -= 10
   end
 
   def ace_recount
     @hand.each do |card|
-      @hand[card[0]] = 1 if card[0].to_s.include?('A')
+      card.value = 1 if card.face.to_s.include?('A')
     end
   end
 
@@ -44,10 +40,6 @@ class Person
       print "|#{card}| "
     end
     puts
-  end
-
-  def make_turn
-    take_card(@deck) if another_card?
   end
 
   def limit?

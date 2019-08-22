@@ -47,8 +47,8 @@ class Game
     2.times { @player.take_card(@deck) }
     2.times { @dealer.take_card(@deck) }
     round_state
-    @player.take_card(@deck) if player.another_card?
-    @dealer.take_card(@deck) if dealer.another_card?
+    @player.make_turn
+    @dealer.make_turn
     system 'clear'
     round_summary
     check_victory

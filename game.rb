@@ -5,76 +5,33 @@ class Game
     @player = player
     @dealer = dealer
     @deck = deck
-    @interface = Interface.new
+    @interface = Interface.new(self)
     @bet = BET
     @bank = 0
   end
 
-  def main_menu
-    @interface.main_menu
-    begin
-      user_input = gets.to_i
-      raise 'Please enter 1 for New Game or 2 to Exit' unless [1, 2].include?(user_input)
-    rescue RuntimeError => e
-      puts e.message
-      puts
-      retry
-    end
-    case user_input
-    when 1
-      new_game
-    when 2
-      puts 'GoodBye!'
-      exit
-    end
-  end
-
-  def new_game
-    @interface.new_game
-    begin
-      name = gets.strip.capitalize
-      raise 'Name cant be blank' if name.to_s.empty?
-    rescue RuntimeError => e
-      puts e.message
-      retry
-    end
-    @player = Player.new(name)
+  def new_game(player_name)
+    @player = Player.new(player_name)
     @dealer = Dealer.new
     new_round
   end
 
   def new_round
-    @player.hand = {}
-    @dealer.hand = {}
+    @player.hand = []
+    @dealer.hand = []
+    @dealer.hidden = true
     @deck = Deck.new
     system 'clear'
     place_bets
     2.times { @player.take_card(@deck) }
     2.times { @dealer.take_card(@deck) }
     round_state
-    @player.take_card(@deck) if @player.another_card?
-    @dealer.take_card(@deck) if @dealer.another_card?
-    system 'clear'
-    round_summary
-    check_victory
-    another_round
   end
 
-  def another_round
-    @interface.another_round
-    begin
-      user_input = gets.to_i
-      raise 'Please input 1 for New Round or 2 for Main Menu' unless [1, 2].include?(user_input)
-    rescue RuntimeError => e
-      puts e.message
-      retry
-    end
-    case user_input
-    when 1
-      new_round
-    when 2
-      main_menu
-    end
+  def game_state
+    round_summary
+    puts
+    check_victory
   end
 
   def check_victory
@@ -117,14 +74,14 @@ class Game
     puts 'You won the game!'
     puts 'Press any key to return to main menu'
     gets
-    main_menu
+    @interface.main_menu
   end
 
   def player_loose
     puts 'Your balance is empty!'
     puts 'Press any key to return to main menu'
     gets
-    main_menu
+    @interface.main_menu
   end
 
   def draw
@@ -137,18 +94,16 @@ class Game
   def round_state
     @player.draw_hand
     puts
-    puts "#{@player.name}'s balance: #{@player.balance}"
+    @player.draw_balance
     puts
-    @dealer.draw_hand_hidden
+    @dealer.hidden ? @dealer.draw_hand_hidden : @dealer.draw_hand
     puts
-    puts "#{@dealer.name}'s balance: #{@dealer.balance}"
+    @dealer.draw_balance
     puts
   end
 
   def round_summary
-    @player.draw_hand
-    puts
-    @dealer.draw_hand
-    puts
+    @dealer.hidden = false
+    round_state
   end
 end

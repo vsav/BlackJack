@@ -30,7 +30,7 @@ class Interface
   def new_game
     system 'clear'
     puts 'Welcome to BlackJack'
-    puts 'Please enter your name'
+    print 'Please enter your name '
     begin
       player_name = gets.strip.capitalize
       raise 'Name cant be blank' if player_name.to_s.empty?
@@ -43,7 +43,7 @@ class Interface
   end
 
   def next_turn
-    puts 'One more card?(1:take card, 2:pass, 3:open): '
+    print 'One more card?(1:take card, 2:pass, 3:open): '
     begin
       user_input = gets.to_i
       raise 'Please select 1, 2 or 3 ' unless [1, 2, 3].include?(user_input)
@@ -64,7 +64,7 @@ class Interface
   end
 
   def another_round
-    puts 'One more round?(1:yes 2:main menu) '
+    print 'One more round?(1:yes 2:main menu) '
     begin
       user_input = gets.to_i
       raise 'Please input 1 for New Round or 2 for Main Menu' unless [1, 2].include?(user_input)

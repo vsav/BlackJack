@@ -46,6 +46,10 @@ class Person
     puts
   end
 
+  def make_turn
+    take_card(@deck) if another_card?
+  end
+
   def limit?
     count_points
     @points > 21

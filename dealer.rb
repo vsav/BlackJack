@@ -24,11 +24,4 @@ class Dealer < Person
       true
     end
   end
-
-  def draw_hand_hidden
-    puts "#{@name}'s hand: "
-    puts '*' * 30
-    print '| ? | ' * @hand.size
-    puts
-  end
 end

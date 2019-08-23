@@ -36,19 +36,6 @@ class Person
     end
   end
 
-  def draw_hand
-    puts "#{@name}'s hand: #{@points} points total"
-    puts '*' * 30
-    @hand.each do |card|
-      print "|#{card.face}| "
-    end
-    puts
-  end
-
-  def draw_balance
-    puts "#{@name}'s balance: #{@balance}"
-  end
-
   def limit?
     count_points
     @points > 21

@@ -60,36 +60,29 @@ class Game
   end
 
   def player_wins
-    puts 'PREY SLAUGHTERED!'
-    puts
+    @interface.player_wins
     @player.balance += @bank
     dealer_loose if @dealer.balance.zero?
   end
 
   def dealer_wins
-    puts 'YOU DIED!'
-    puts
+    @interface.dealer_wins
     @dealer.balance += @bank
     player_loose if @player.balance.zero?
   end
 
   def dealer_loose
-    puts 'You won the game!'
-    puts 'Press any key to return to main menu'
-    gets
+    @interface.dealer_loose
     @interface.main_menu
   end
 
   def player_loose
-    puts 'Your balance is empty!'
-    puts 'Press any key to return to main menu'
-    gets
+    @interface.player_loose
     @interface.main_menu
   end
 
   def draw
-    puts 'DRAW!'
-    puts
+    @interface.draw
     @player.balance += @bet
     @dealer.balance += @bet
   end

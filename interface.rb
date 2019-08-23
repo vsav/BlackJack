@@ -83,6 +83,29 @@ class Interface
     end
   end
 
+  def draw_hand(person)
+    puts "#{person.name}'s hand: #{person.points} points total"
+    puts '*' * 30
+    person.hand.each do |card|
+      print "|#{card.face}| "
+    end
+    puts
+    puts
+  end
+
+  def draw_balance(person)
+    puts "#{person.name}'s balance: #{person.balance}"
+    puts
+  end
+
+  def draw_hand_hidden(person)
+    puts "#{person.name}'s hand: "
+    puts '*' * 30
+    print '| ? | ' * person.hand.size
+    puts
+    puts
+  end
+
   def player_wins
     puts 'PREY SLAUGHTERED!'
     puts

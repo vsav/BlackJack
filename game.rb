@@ -88,14 +88,10 @@ class Game
   end
 
   def round_state
-    @player.draw_hand
-    puts
-    @player.draw_balance
-    puts
-    @dealer.hidden ? @dealer.draw_hand_hidden : @dealer.draw_hand
-    puts
-    @dealer.draw_balance
-    puts
+    @interface.draw_hand(@player)
+    @interface.draw_balance(@player)
+    @dealer.hidden ? @interface.draw_hand_hidden(@dealer) : @interface.draw_hand(@dealer)
+    @interface.draw_balance(@dealer)
   end
 
   def round_summary

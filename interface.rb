@@ -82,4 +82,31 @@ class Interface
       main_menu
     end
   end
+
+  def player_wins
+    puts 'PREY SLAUGHTERED!'
+    puts
+  end
+
+  def dealer_wins
+    puts 'YOU DIED!'
+    puts
+  end
+
+  def dealer_loose
+    puts 'You won the game!'
+    puts 'Press any key to return to main menu'
+    gets
+  end
+
+  def player_loose
+    puts 'Your balance is empty!'
+    puts 'Press any key to return to main menu'
+    gets
+  end
+
+  def draw
+    puts 'DRAW!'
+    puts
+  end
 end

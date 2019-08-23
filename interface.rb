@@ -94,7 +94,7 @@ class Interface
   end
 
   def draw_balance(person)
-    puts "#{person.name}'s balance: #{person.balance}"
+    puts "#{person.name}'s balance: $#{person.balance}"
     puts
   end
 
@@ -107,22 +107,24 @@ class Interface
   end
 
   def player_wins
-    puts 'PREY SLAUGHTERED!'
+    puts 'You won this round!'
+    puts "$#{@game.bank} was added to your balance"
     puts
   end
 
   def dealer_wins
-    puts 'YOU DIED!'
+    puts 'You lose this round!'
+    puts "$#{@game.bet} was removed from your balance"
     puts
   end
 
-  def dealer_loose
+  def dealer_lose
     puts 'You won the game!'
     puts 'Press any key to return to main menu'
     gets
   end
 
-  def player_loose
+  def player_lose
     puts 'Your balance is empty!'
     puts 'Press any key to return to main menu'
     gets
@@ -130,6 +132,7 @@ class Interface
 
   def draw
     puts 'DRAW!'
+    puts 'Your bet was returned to your balance'
     puts
   end
 end

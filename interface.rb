@@ -31,7 +31,7 @@ class Interface
 
   def new_game
     system 'clear'
-    puts 'Welcome to BlackJack'
+    puts 'Welcome to BlackJack game'
     print 'Please enter your name '
     begin
       player_name = gets.strip.capitalize
@@ -41,6 +41,8 @@ class Interface
       retry
     end
     @game.new_game(player_name)
+    system 'clear'
+    game_state
     next_turn
   end
 
@@ -60,8 +62,11 @@ class Interface
     when 2
       @game.dealer.next_turn(@game.deck)
     end
+    @game.dealer.hidden = false
     system 'clear'
-    @game.game_state
+    game_state
+    send(@game.check_victory)
+    send(@game.check_balance) unless @game.check_balance.nil?
     another_round
   end
 
@@ -77,10 +82,19 @@ class Interface
     case user_input
     when 1
       @game.new_round
+      system 'clear'
+      game_state
       next_turn
     when 2
       main_menu
     end
+  end
+
+  def game_state
+    draw_hand(@game.player)
+    draw_balance(@game.player)
+    @game.dealer.hidden ? draw_hand_hidden(@game.dealer) : draw_hand(@game.dealer)
+    draw_balance(@game.dealer)
   end
 
   def draw_hand(person)
@@ -122,12 +136,14 @@ class Interface
     puts 'You won the game!'
     puts 'Press any key to return to main menu'
     gets
+    main_menu
   end
 
   def player_lose
     puts 'Your balance is empty!'
     puts 'Press any key to return to main menu'
     gets
+    main_menu
   end
 
   def draw

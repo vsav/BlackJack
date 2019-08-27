@@ -8,7 +8,6 @@ class Game
     @player = player
     @dealer = dealer
     @deck = deck
-    @interface = Interface.new(self)
     @bet = BET
     @bank = 0
   end
@@ -24,17 +23,9 @@ class Game
     @dealer.hand = []
     @dealer.hidden = true
     @deck = Deck.new
-    system 'clear'
     place_bets
     2.times { @player.take_card(@deck) }
     2.times { @dealer.take_card(@deck) }
-    round_state
-  end
-
-  def game_state
-    round_summary
-    puts
-    check_victory
   end
 
   def check_victory
@@ -60,42 +51,23 @@ class Game
   end
 
   def player_wins
-    @interface.player_wins
     @player.balance += @bank
-    dealer_lose if @dealer.balance.zero?
+    :player_wins
   end
 
   def dealer_wins
-    @interface.dealer_wins
     @dealer.balance += @bank
-    player_lose if @player.balance.zero?
+    :dealer_wins
   end
 
-  def dealer_lose
-    @interface.dealer_lose
-    @interface.main_menu
-  end
-
-  def player_lose
-    @interface.player_lose
-    @interface.main_menu
+  def check_balance
+    return :dealer_lose if @dealer.balance.zero?
+    return :player_lose if @player.balance.zero?
   end
 
   def draw
-    @interface.draw
     @player.balance += @bet
     @dealer.balance += @bet
-  end
-
-  def round_state
-    @interface.draw_hand(@player)
-    @interface.draw_balance(@player)
-    @dealer.hidden ? @interface.draw_hand_hidden(@dealer) : @interface.draw_hand(@dealer)
-    @interface.draw_balance(@dealer)
-  end
-
-  def round_summary
-    @dealer.hidden = false
-    round_state
+    :draw
   end
 end

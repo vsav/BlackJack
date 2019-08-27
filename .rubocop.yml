@@ -1,9 +1,9 @@
 Metrics/LineLength:
   Max: 120
 Metrics/ClassLength:
-  Max: 130
+  Max: 150
 Metrics/MethodLength:
-  Max: 20
+  Max: 25
 Metrics/CyclomaticComplexity:
   Max: 15
 Metrics/PerceivedComplexity:

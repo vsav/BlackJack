@@ -10,11 +10,8 @@ class Deck
   end
 
   def collect_deck
-    faces = Card::FACES
-    suits = Card::SUITS
-
-    suits.each do |suit|
-      faces.each do |face, value|
+    Card::SUITS.each do |suit|
+      Card::FACES.each do |face, value|
         face += suit
         @cards << Card.new(face, value)
       end

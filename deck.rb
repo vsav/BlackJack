@@ -12,8 +12,7 @@ class Deck
   def collect_deck
     Card::SUITS.each do |suit|
       Card::FACES.each do |face, value|
-        face += suit
-        @cards << Card.new(face, value)
+        @cards << Card.new(face, value, suit)
       end
     end
   end

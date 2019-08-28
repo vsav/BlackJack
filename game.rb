@@ -21,6 +21,8 @@ class Game
   def new_round
     @player.hand = []
     @dealer.hand = []
+    @player.points = 0
+    @dealer.points = 0
     @dealer.hidden = true
     @deck = Deck.new
     place_bets
@@ -29,11 +31,9 @@ class Game
   end
 
   def check_victory
-    @player.count_points
-    @dealer.count_points
     if @player.points > @dealer.points && @player.points <= 21
       player_wins
-    elsif @player.points >= 21 && @dealer.points >= 21 || @player.points == @dealer.points
+    elsif @player.points > 21 && @dealer.points > 21 || @player.points == @dealer.points
       draw
     elsif @player.points > 21 && @dealer.points <= 21
       dealer_wins
@@ -52,12 +52,12 @@ class Game
 
   def player_wins
     @player.balance += @bank
-    :player_wins
+    @player
   end
 
   def dealer_wins
     @dealer.balance += @bank
-    :dealer_wins
+    @dealer
   end
 
   def check_balance
@@ -68,6 +68,6 @@ class Game
   def draw
     @player.balance += @bet
     @dealer.balance += @bet
-    :draw
+    @nil
   end
 end

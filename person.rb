@@ -2,42 +2,32 @@
 
 # main class for both human and AI
 class Person
-  attr_accessor :balance, :hand, :card
-  attr_reader :name, :points, :player, :dealer, :deck
+  attr_accessor :balance, :hand, :card, :points
+  attr_reader :name, :player, :dealer, :deck
 
   def initialize(*)
     @balance = 100
     @hand = []
+    @points = 0
   end
 
   def take_card(deck)
     @card = deck.take_card
-    @hand << card
-    if limit?
-      if @card.face.to_s.include?('A')
-        @card.value = 1
-      else
-        ace_recount
-      end
-    end
-    count_points
-  end
-
-  def count_points
-    @points = 0
-    @hand.each do |card|
-      @points += card.value
-    end
+    @hand << @card
+    @points += @card.value
+    ace_recount if limit?
   end
 
   def ace_recount
     @hand.each do |card|
-      card.value = 1 if card.face.to_s.include?('A')
+      if limit? && card.ace?
+        card.value = 1
+        @points -= 10
+      end
     end
   end
 
   def limit?
-    count_points
     @points > 21
   end
 end

@@ -15,7 +15,6 @@ class Dealer < Person
   end
 
   def another_card?
-    count_points
     if @points >= 21
       false
     elsif @points >= 17 && @points <= 21

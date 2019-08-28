@@ -65,7 +65,14 @@ class Interface
     @game.dealer.hidden = false
     system 'clear'
     game_state
-    send(@game.check_victory)
+    case @game.check_victory
+    when @game.player
+      player_wins
+    when @game.dealer
+      dealer_wins
+    when nil
+      draw
+    end
     send(@game.check_balance) unless @game.check_balance.nil?
     another_round
   end
@@ -101,7 +108,7 @@ class Interface
     puts "#{person.name}'s hand: #{person.points} points total"
     puts '*' * 30
     person.hand.each do |card|
-      print "|#{card.face}| "
+      print "|#{card.card_face}|"
     end
     puts
     puts

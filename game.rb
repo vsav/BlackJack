@@ -3,6 +3,7 @@
 # main game actions
 class Game
   attr_reader :player, :dealer, :deck, :bet, :bank
+
   BET = 10
   def initialize(player, dealer, deck)
     @player = player
@@ -61,13 +62,12 @@ class Game
   end
 
   def check_balance
-    return :dealer_lose if @dealer.balance.zero?
-    return :player_lose if @player.balance.zero?
+    :dealer_lose if @dealer.balance.zero?
+    :player_lose if @player.balance.zero?
   end
 
   def draw
     @player.balance += @bet
     @dealer.balance += @bet
-    @nil
   end
 end

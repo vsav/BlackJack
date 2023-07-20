@@ -3,6 +3,7 @@
 # playing cards deck class
 class Deck
   attr_reader :cards
+
   def initialize
     @cards = []
     collect_deck

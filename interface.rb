@@ -108,7 +108,7 @@ class Interface
     puts "#{person.name}'s hand: #{person.points} points total"
     puts '*' * 30
     person.hand.each do |card|
-      print "|#{card.card_face}|"
+      print "#{card.card_face}  "
     end
     puts
     puts

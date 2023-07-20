@@ -5,10 +5,10 @@ class Card
   attr_reader :face
   attr_accessor :value
 
-  SPADES = "\u2660"
-  HEART = "\u2665"
-  DIAMOND = "\u2666"
-  CLUB = "\u2663"
+  SPADES = "\u{2660 FE0F}"
+  HEART = "\u{2665 FE0F}"
+  DIAMOND = "\u{2666 FE0F}"
+  CLUB = "\u{2663 FE0F}"
 
   SUITS = [SPADES, HEART, DIAMOND, CLUB].freeze
   FACES = { '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8,
